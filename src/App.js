@@ -3,9 +3,15 @@ import './App.css';
 import React, {useState, useEffect} from 'react';
 
 const CardColumn = (props) => (
-  <div onClick={() => props.onClick(props.column)} style={{width: '100px', float: 'left'}}>
-    { props.cards.map(card =>
-      <img src={`/cards/card${card}.png`} width="80px"/>
+  <div onClick={() => props.onClick(props.column)}>
+    { props.cards.map((card, idx) =>
+      <img style={{
+        position: 'absolute', 
+        width: '100px', 
+        float: 'left',
+        left: (props.column -1) * 120,
+        top: idx * 80
+      }} src={`/cards/card${card}.png`} width="80px"/>
     )
   }
   <button onClick={() => props.onClick(props.column)}>Coluna {props.column}</button>
@@ -16,6 +22,14 @@ const CardBoard = (props) => {
   const [count, setCount] = useState(0);
   let cards = [...Array(21).keys()].map(number => number + 1);
   const [selectedCard, setSelectedCard] = useState('');
+  const instructions = [
+    'Bem vindo ao Cartas Mágicas. Pense em uma carta do baralho e selecione a coluna que ela está.', 
+    'Muito bem! Agora selecione a coluna onde está a carta em que você pensou.', 
+    'Qual a coluna está a carta?',
+    'A carta que você pensou foi: '
+  ];
+
+  const [instruction, setInstruction] = useState(instructions[0]);
 
   const ShuffleNumbers = (numbers) => {
     let result = {0: [], 1: [], 2: []};
@@ -57,17 +71,22 @@ const CardBoard = (props) => {
       setCards2(ShuffleNumbers(cards)[1]);
       setCards3(ShuffleNumbers(cards)[2]);
     }
+    setInstruction(instructions[count + 1]);
   }
 
   return(
     <div>
-      <div style={{width: '300px', float: 'left'}}>
+      <div style={{width: '400px', float: 'left'}}>
         <CardColumn key={1} column={1} onClick={chooseColumn} cards={cards1}/>
         <CardColumn key={2} column={2} onClick={chooseColumn} cards={cards2}/>
         <CardColumn key={3} column={3} onClick={chooseColumn} cards={cards3}/>
         <button onClick={resetButtonHandler}>Reiniciar</button>
       </div>
-      <div><img style={{display: (selectedCard === '' ? 'none' : 'block')}} src={`/cards/card${selectedCard}.png`} /></div>
+      <div><br/>{instruction}</div>
+      <div>
+        <img style={{display: (selectedCard === '' ? 'none' : 'block')}} src={`/cards/card${selectedCard}.png`} />
+      </div>
+
     </div>
   );
 };
