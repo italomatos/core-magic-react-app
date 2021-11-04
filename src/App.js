@@ -9,7 +9,7 @@ const CardColumn = (props) => (
         position: 'absolute', 
         width: '100px', 
         float: 'left',
-        left: (props.column -1) * 120,
+        left: 10 + (props.column -1) * 120,
         top: 140 + idx * 80
       }} src={`/cards/card${card}.png`} width="80px"/>
     )
@@ -50,6 +50,7 @@ const CardBoard = (props) => {
     setCards1(ShuffleNumbers(cards)[0]);
     setCards2(ShuffleNumbers(cards)[1]);
     setCards3(ShuffleNumbers(cards)[2]);
+    setInstruction(instructions[0]);
   }
 
   const chooseColumn = (column) => { 
@@ -77,7 +78,7 @@ const CardBoard = (props) => {
     <div>
       <div>
         <div><button onClick={resetButtonHandler}>Reiniciar</button></div>
-        <div style={{float: 'left', width: '250px', padding: '10px'}}><br/>{instruction}</div>
+        <div style={{color: 'white', float: 'left', width: '260px', padding: '10px'}}><br/>{instruction}</div>
         <div><img style={{width: '70px', display: (selectedCard === '' ? 'none' : 'block')}} src={`/cards/card${selectedCard}.png`} /></div>
       </div>
       
