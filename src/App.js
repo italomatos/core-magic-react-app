@@ -10,11 +10,10 @@ const CardColumn = (props) => (
         width: '100px', 
         float: 'left',
         left: (props.column -1) * 120,
-        top: idx * 80
+        top: 140 + idx * 80
       }} src={`/cards/card${card}.png`} width="80px"/>
     )
   }
-  <button onClick={() => props.onClick(props.column)}>Coluna {props.column}</button>
   </div>
 );
 
@@ -76,15 +75,18 @@ const CardBoard = (props) => {
 
   return(
     <div>
-      <div style={{width: '400px', float: 'left'}}>
+      <div>
+        <div><button onClick={resetButtonHandler}>Reiniciar</button></div>
+        <div style={{float: 'left', width: '250px', padding: '10px'}}><br/>{instruction}</div>
+        <div><img style={{width: '70px', display: (selectedCard === '' ? 'none' : 'block')}} src={`/cards/card${selectedCard}.png`} /></div>
+      </div>
+      
+      
+      <div>
         <CardColumn key={1} column={1} onClick={chooseColumn} cards={cards1}/>
         <CardColumn key={2} column={2} onClick={chooseColumn} cards={cards2}/>
         <CardColumn key={3} column={3} onClick={chooseColumn} cards={cards3}/>
-        <button onClick={resetButtonHandler}>Reiniciar</button>
-      </div>
-      <div><br/>{instruction}</div>
-      <div>
-        <img style={{display: (selectedCard === '' ? 'none' : 'block')}} src={`/cards/card${selectedCard}.png`} />
+        
       </div>
 
     </div>
